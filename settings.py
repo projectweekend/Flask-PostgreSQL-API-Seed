@@ -16,3 +16,5 @@ CSRF_ENABLED = False
 
 SECRET_KEY = os.getenv('SECRET_KEY', None)
 assert SECRET_KEY
+
+SECURITY_TOKEN_AUTHENTICATION_HEADER = 'Authorization'

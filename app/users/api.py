@@ -6,6 +6,7 @@ from sqlalchemy.exc import IntegrityError
 
 from app.users.models import user_datastore
 from app.utils.auth import auth_required
+from app.utils.errors import EMAIL_IN_USE
 from app import db
 
 
@@ -32,7 +33,7 @@ class UserAPI(restful.Resource):
         try:
             db.session.commit()
         except IntegrityError:
-            return {'message': 'User with that email already exists'}, 409
+            return EMAIL_IN_USE
 
         return {
             'id': user.id,

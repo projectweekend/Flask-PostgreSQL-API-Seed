@@ -1,0 +1,16 @@
+db:
+    image: orchardup/postgresql
+    ports:
+        - 5432:5432
+web:
+    build: .
+    command: python run.py
+    volumes:
+        - .:/code
+    ports:
+        - 5000:5000
+    links:
+        - db
+    environment:
+        SECRET_KEY: asdklfjeoja039rjdlkjfaoi3rdk
+        DEBUG: True

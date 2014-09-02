@@ -1,35 +1,37 @@
 from flask.ext import restful
-from flask.ext.restful import reqparse, fields, marshal_with
-from flask_security.core import current_user
+from flask.ext.restful import fields, marshal_with
 from sqlalchemy.exc import IntegrityError
 
 
-from app.users.models import user_datastore
-from app.utils.auth import auth_required
+from app.users.mixins import SignupLoginMixin
+from app.users.models import User
+
+from app.utils.auth import auth_required, generate_token
 from app.utils.errors import EMAIL_IN_USE
+
 from app import db
 
 
-class UserAPI(restful.Resource):
+user_fields = {
+    'id': fields.Integer,
+    'email': fields.String,
+    'password': fields.String
+}
 
-    reg_parser = reqparse.RequestParser()
-    reg_parser.add_argument('email', type=str, required=True)
-    reg_parser.add_argument('password', type=str, required=True)
 
-    user_fields = {
-        'id': fields.Integer,
-        'email': fields.String,
-    }
+class UserAPI(SignupLoginMixin, restful.Resource):
 
     @marshal_with(user_fields)
     @auth_required
     def get(self):
-        return current_user
+        return {}, 200
 
     def post(self):
         args = self.reg_parser.parse_args()
 
-        user = user_datastore.create_user(email=args['email'], password=args['password'])
+        user = User(email=args['email'], password=args['password'])
+        db.session.add(user)
+
         try:
             db.session.commit()
         except IntegrityError:
@@ -37,5 +39,15 @@ class UserAPI(restful.Resource):
 
         return {
             'id': user.id,
-            'token': user.get_auth_token()
+            'token': generate_token(user)
         }, 201
+
+
+
+class AuthenticationAPI(restful.Resource):
+
+    def post(self):
+        args = self.reg_parser.parse_args()
+
+        return {}, 200
+

@@ -5,7 +5,7 @@ from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous import SignatureExpired, BadSignature
 
 from app import app
-from app.utils.errors import UNAUTHORIZED
+from app.utils.errors import UNAUTHORIZED, FORBIDDEN
 
 
 TWO_WEEKS = 1209600
@@ -35,4 +35,17 @@ def auth_required(func):
                 g.current_user = user
                 return func(*args, **kwargs)
         return UNAUTHORIZED
+    return wrapper
+
+
+def admin_required(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        token = request.headers.get('Authorization', '')
+        if token:
+            user = verify_token(token)
+            if user and user.is_admin:
+                g.current_user = user
+                return func(*args, **kwargs)
+        return FORBIDDEN
     return wrapper

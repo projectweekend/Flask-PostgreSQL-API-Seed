@@ -7,7 +7,7 @@ from sqlalchemy.exc import IntegrityError
 from app.users.mixins import SignupLoginMixin
 from app.users.models import User
 
-from app.utils.auth import auth_required, generate_token
+from app.utils.auth import auth_required, admin_required, generate_token
 from app.utils.errors import EMAIL_IN_USE, UNAUTHORIZED
 
 from app import db, bcrypt
@@ -43,7 +43,6 @@ class UserAPI(SignupLoginMixin, restful.Resource):
         }, 201
 
 
-
 class AuthenticationAPI(SignupLoginMixin, restful.Resource):
 
     def post(self):
@@ -58,3 +57,10 @@ class AuthenticationAPI(SignupLoginMixin, restful.Resource):
             }
 
         return UNAUTHORIZED
+
+
+class AdminOnlyAPI(restful.Resource):
+
+    @admin_required
+    def get(self):
+        return {}, 200

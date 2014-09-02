@@ -44,7 +44,7 @@ def admin_required(func):
         token = request.headers.get('Authorization', '')
         if token:
             user = verify_token(token)
-            if user and user.is_admin:
+            if user and user['is_admin']:
                 g.current_user = user
                 return func(*args, **kwargs)
         return FORBIDDEN

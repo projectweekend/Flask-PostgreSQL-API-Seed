@@ -21,3 +21,7 @@ class User(db.Model):
             'email': self.email,
             'is_admin': self.is_admin
         }
+
+    def deactivate(self):
+        self.active = False
+

@@ -8,9 +8,9 @@ from app.users.mixins import SignupLoginMixin
 from app.users.models import User
 
 from app.utils.auth import auth_required, generate_token
-from app.utils.errors import EMAIL_IN_USE
+from app.utils.errors import EMAIL_IN_USE, UNAUTHORIZED
 
-from app import db
+from app import db, bcrypt
 
 
 user_fields = {
@@ -44,10 +44,17 @@ class UserAPI(SignupLoginMixin, restful.Resource):
 
 
 
-class AuthenticationAPI(restful.Resource):
+class AuthenticationAPI(SignupLoginMixin, restful.Resource):
 
     def post(self):
         args = self.reg_parser.parse_args()
 
-        return {}, 200
+        user = db.session.query(User).filter(User.email==args['email']).first()
+        if user and bcrypt.check_password_hash(user.password, args['password']):
 
+            return {
+                'id': user.id,
+                'token': generate_token(user)
+            }
+
+        return UNAUTHORIZED

@@ -1,3 +1,4 @@
+from flask import g
 from flask.ext import restful
 from flask.ext.restful import fields, marshal_with
 from sqlalchemy.exc import IntegrityError
@@ -14,17 +15,16 @@ from app import db
 
 user_fields = {
     'id': fields.Integer,
-    'email': fields.String,
-    'password': fields.String
+    'email': fields.String
 }
 
 
 class UserAPI(SignupLoginMixin, restful.Resource):
 
-    @marshal_with(user_fields)
     @auth_required
+    @marshal_with(user_fields)
     def get(self):
-        return {}, 200
+        return g.current_user
 
     def post(self):
         args = self.reg_parser.parse_args()

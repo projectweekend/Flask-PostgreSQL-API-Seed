@@ -34,9 +34,12 @@ API Routes
 ====================
 
 This API uses token-based authentication. A token is obtained by:
+
 * Successfully registering a new user at `/api/v1/user`
 * Successfully authenticating an existing user at `/api/v1/authenticate`
+
 Once the client has the token, it must be included in the `Authorization` header of all requests. Only the following routes are exempt from authentication:
+
 * `/api/register`
 * `/api/authenticate`
 

@@ -33,10 +33,7 @@ Project Organization
 API Routes
 ====================
 
-This API uses token-based authentication. A token is obtained by registering a new user (`/api/v1/user`) or authenticating an existing user (`/api/v1/authenticate`). Once the client has the token, it must be included in the `Authorization` header of all requests. Only the following routes are exempt from authentication:
-
-* `/api/register`
-* `/api/authenticate`
+This API uses token-based authentication. A token is obtained by registering a new user (`/api/v1/user`) or authenticating an existing user (`/api/v1/authenticate`). Once the client has the token, it must be included in the `Authorization` header of all requests.
 
 
 ### Register a new user
@@ -66,3 +63,50 @@ This API uses token-based authentication. A token is obtained by registering a n
 * `201` if successful
 * `400` if incorrect data provided
 * `409` if email is in use
+
+
+### Get the authenticated user
+
+**GET:**
+```
+/api/v1/user
+```
+
+**Response:**
+```
+{
+    "id": 2,
+    "email": "test2@test.com",
+}
+```
+
+**Status Codes:**
+* `200` if successful
+* `401` if not authenticated
+
+
+### Authenticate a user
+
+**POST:**
+```
+/api/v1/authenticate
+```
+
+**Body:**
+```
+{
+    "email": "something@email.com",
+    "password": "123456"
+}
+```
+
+**Response:**
+```
+{
+    "id": 2,
+    "token": "eyJhbGciOiJIUzI1NiIsImV4cCI6MTQxMDk2ODA5NCwiaWF0IjoxNDA5NzU4NDk0fQ.eyJpc19hZG1pbiI6ZmFsc2UsImlkIjoyLCJlbWFpbCI6InRlc3QyQHRlc3QuY29tIn0.goBHisCajafl4a93jfal0sD5pdjeYd5se_a9sEkHs"
+}
+
+**Status Codes:**
+* `200` if successful
+* `401` if invalid credentials

@@ -13,7 +13,7 @@ db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 
 
-import urls
+import routes
 
 
 db.create_all()

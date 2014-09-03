@@ -26,7 +26,7 @@ Project Organization
 
 * Application-wide settings are stored in `settings.py` at the root of the repository. These items are accessible on the `config` dictionary property of the `app` object. Example: `debug = app.config['DEBUG']`
 * The directory `/app` contains the API application
-* URL mapping is managed in `/app/urls.py`
+* URL mapping is managed in `/app/routes.py`
 * Functionality is organized in packages. Example: `/app/users` or `/app/utils`.
 
 

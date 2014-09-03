@@ -15,4 +15,8 @@ With Docker/Fig/Vagrant installed, use the following steps to launch for the fir
 
 There are just a couple of configurations managed as environment variables. In the development environment, these are injected by Fig and managed in the `fig.yml` file.
 
+* `DEBUG` - This toggle debug mode for the app to True/False.
 * `SECRET_KEY` - This is a secret string that you make up. It is used to encrypt and verify the authentication token on routes that require authentication.
+
+
+##

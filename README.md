@@ -21,4 +21,9 @@ There are just a couple of configurations managed as environment variables. In t
 * `SECRET_KEY` - This is a secret string that you make up. It is used to encrypt and verify the authentication token on routes that require authentication.
 
 
-##
+## Project Organization
+
+* Application-wide settings are stored in `settings.py` at the root of the repository. These items are accessible on the `config` dictionary property of the `app` object. Example: `debug = app.config['DEBUG']`
+* The directory `/app` contains the API application
+* URL mapping is managed in `/app/urls.py`
+* Functionality is organized in packages. Example: `/app/users` or `/app/utils`.

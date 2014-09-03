@@ -15,13 +15,6 @@ class User(db.Model):
         self.active = True
         self.is_admin = is_admin
 
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'email': self.email,
-            'is_admin': self.is_admin
-        }
-
     def deactivate(self):
         self.active = False
 

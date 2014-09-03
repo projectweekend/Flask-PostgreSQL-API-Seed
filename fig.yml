@@ -12,5 +12,6 @@ web:
     links:
         - db
     environment:
-        SECRET_KEY: asdklfjeoja039rjdlkjfaoi3rdk
         DEBUG: True
+        PORT: 5000
+        SECRET_KEY: asdklfjeoja039rjdlkjfaoi3rdk

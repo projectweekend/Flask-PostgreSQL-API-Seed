@@ -11,11 +11,13 @@ With Docker/Fig/Vagrant installed, use the following steps to launch for the fir
 * When `fig up` completes, the app should be accessible at [http://127.0.0.1:5000](http://127.0.0.1:5000). (NOTE: if running commands within the Vagrant VM that was provisioned in the first step, the app can be found at: [http://192.168.13.81:5000](http://192.168.13.81:5000))
 
 
-## Configuration
+## Environment Variables
 
 There are just a couple of configurations managed as environment variables. In the development environment, these are injected by Fig and managed in the `fig.yml` file.
 
+* `DATABASE_URL` - This is the connection URL for the PostgreSQL database. It is not used in the **development environment**.
 * `DEBUG` - This toggle debug mode for the app to True/False.
+* `PORT` - This controls the port the API will serve from. If omitted, the default is 5000. If the port is changed in the **development environment**, and you are using a Vagrant VM, the port mapping in the `Vagrantfile` will also need to be updated to match.
 * `SECRET_KEY` - This is a secret string that you make up. It is used to encrypt and verify the authentication token on routes that require authentication.
 
 

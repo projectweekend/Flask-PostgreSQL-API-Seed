@@ -17,4 +17,3 @@ class User(db.Model):
 
     def deactivate(self):
         self.active = False
-

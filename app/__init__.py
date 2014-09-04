@@ -5,7 +5,7 @@ from flask.ext.bcrypt import Bcrypt
 
 
 app = Flask(__name__)
-app.config.from_object('settings')
+app.config.from_object('config')
 
 rest_api = restful.Api(app)
 

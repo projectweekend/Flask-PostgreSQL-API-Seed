@@ -28,6 +28,17 @@ Project Organization
 * The directory `/app` contains the API application
 * URL mapping is managed in `/app/routes.py`
 * Functionality is organized in packages. Example: `/app/users` or `/app/utils`.
+* Tests are contained in each package. Example: `app/users/tests.py`
+
+
+Running Tests
+====================
+
+Tests are ran with [nose](https://nose.readthedocs.org/en/latest/) from inside the `fig` web container:
+
+```
+$ fig run web nosetests -v
+```
 
 
 API Routes

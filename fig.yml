@@ -4,7 +4,7 @@ db:
         - 5432:5432
 web:
     build: .
-    command: python run.py
+    command: python run.py runserver -h 0.0.0.0 -p 5000
     volumes:
         - .:/code
     ports:
@@ -13,5 +13,4 @@ web:
         - db
     environment:
         DEBUG: True
-        PORT: 5000
         SECRET_KEY: asdklfjeoja039rjdlkjfaoi3rdk

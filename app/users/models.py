@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from app import db, bcrypt
+from app.utils.misc import make_code
 
 
 class User(db.Model):
@@ -25,5 +26,5 @@ class PasswordReset(db.Model):
 
     id = db.Column(db.Integer(), primary_key=True)
     user = db.Column(db.Integer(), db.ForeignKey('user.id'))
-    code = db.Column(db.String(255), unique=True)
+    code = db.Column(db.String(255), unique=True, default=make_code)
     date = db.Column(db.DateTime(), default=datetime.now)

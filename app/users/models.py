@@ -21,7 +21,7 @@ class User(db.Model):
         self.active = False
 
 
-class PasswordReset(db.model):
+class PasswordReset(db.Model):
 
     id = db.Column(db.Integer(), primary_key=True)
     user = db.Column(db.Integer(), db.ForeignKey('user.id'))

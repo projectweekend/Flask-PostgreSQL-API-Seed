@@ -26,4 +26,4 @@ class PasswordReset(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     user = db.Column(db.Integer(), db.ForeignKey('user.id'))
     code = db.Column(db.String(255), unique=True)
-    date = db.Column(db.DateTime(default=datetime.now))
+    date = db.Column(db.DateTime(), default=datetime.now)

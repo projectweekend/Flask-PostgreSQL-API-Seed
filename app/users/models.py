@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from app import db, bcrypt
 
 
@@ -17,3 +19,11 @@ class User(db.Model):
 
     def deactivate(self):
         self.active = False
+
+
+class PasswordReset(db.model):
+
+    id = db.Column(db.Integer(), primary_key=True)
+    user = db.Column(db.Integer(), db.ForeignKey('user.id'))
+    code = db.Column(db.String(255), unique=True)
+    date = db.Column(db.DateTime(default=datetime.now))

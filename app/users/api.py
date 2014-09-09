@@ -73,8 +73,7 @@ class PasswordResetRequestAPI(restful.Resource):
             password_reset = PasswordReset(user=user)
             db.session.add(password_reset)
             db.session.commit()
-            # REPLACE: Send the email using preferred method
-            pass
+            # TODO: Send the email using any preferred method
 
         return {}, 201
 

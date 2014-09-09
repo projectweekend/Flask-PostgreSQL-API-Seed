@@ -40,6 +40,15 @@ $ fig run web nosetests -v
 ```
 
 
+Database Migrations
+====================
+
+Migrations for the provided models are part of the seed project. To generate new migrations use `Flask-Migrate`:
+
+    $ fig run web python run.py db migrate
+    $ fig run web python run.py db upgrade
+
+
 API Routes
 ====================
 

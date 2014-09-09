@@ -10,7 +10,7 @@ from app.users.mixins import SignupLoginMixin
 from app.users.models import User, PasswordReset
 
 from app.utils.auth import auth_required, admin_required, generate_token
-from app.utils.errors import EMAIL_IN_USE, UNAUTHORIZED, CODE_NOT_VALID, BAD_CREDENTIALS
+from app.utils.errors import EMAIL_IN_USE, CODE_NOT_VALID, BAD_CREDENTIALS
 
 from app import db, bcrypt
 

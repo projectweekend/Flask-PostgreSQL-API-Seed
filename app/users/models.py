@@ -28,11 +28,12 @@ class User(db.Model):
 class PasswordReset(db.Model):
 
     id = db.Column(db.Integer(), primary_key=True)
-    user = db.Column(db.Integer(), db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer(), db.ForeignKey('user.id'))
+    user = db.relationship(User)
     code = db.Column(db.String(255), unique=True, default=make_code)
     date = db.Column(db.DateTime(), default=datetime.now)
 
     db.UniqueConstraint('user', 'code', name='uni_user_code')
 
-    def __init__(self, user_id):
-        self.user = user_id
+    def __init__(self, user):
+        self.user = user

@@ -1,7 +1,11 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from app import db, bcrypt
 from app.utils.misc import make_code
+
+
+def expiration_date():
+    return datetime.now() + timedelta(days=1)
 
 
 class User(db.Model):
@@ -30,7 +34,7 @@ class PasswordReset(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id'))
     code = db.Column(db.String(255), unique=True, default=make_code)
-    date = db.Column(db.DateTime(), default=datetime.now)
+    date = db.Column(db.DateTime(), default=expiration_date)
 
     user = db.relationship(User)
 

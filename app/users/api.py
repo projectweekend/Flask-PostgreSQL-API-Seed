@@ -10,7 +10,7 @@ from app.users.mixins import SignupLoginMixin
 from app.users.models import User, PasswordReset
 
 from app.utils.auth import auth_required, admin_required, generate_token
-from app.utils.errors import EMAIL_IN_USE, UNAUTHORIZED
+from app.utils.errors import EMAIL_IN_USE, UNAUTHORIZED, CODE_NOT_VALID
 
 from app import db, bcrypt
 
@@ -91,7 +91,7 @@ class PasswordResetConfirmAPI(restful.Resource):
                             ).filter(PasswordReset.date>datetime.now()).first()
 
         if not password_reset:
-            return UNAUTHORIZED
+            return CODE_NOT_VALID
 
         password_reset.user.set_password(args['password'])
         db.session.delete(password_reset)

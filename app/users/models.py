@@ -33,3 +33,6 @@ class PasswordReset(db.Model):
     date = db.Column(db.DateTime(), default=datetime.now)
 
     db.UniqueConstraint('user', 'code', name='uni_user_code')
+
+    def __init__(self, user):
+        self.user = user

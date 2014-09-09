@@ -66,10 +66,13 @@ class PasswordResetRequestAPI(restful.Resource):
     def post(self):
         req_parser = reqparse.RequestParser()
         req_parser.add_argument('email', type=str, required=True)
-        args = self.req_parser.parse_args()
+        args = req_parser.parse_args()
 
         user = db.session.query(User).filter(User.email==args['email']).first()
         if user:
+            password_reset = PasswordReset(user=user)
+            db.session.add(password_reset)
+            db.session.commit()
             # TODO: send email
             pass
 
@@ -82,7 +85,7 @@ class PasswordResetConfirmAPI(restful.Resource):
         req_parser = reqparse.RequestParser()
         req_parser.add_argument('code', type=str, required=True)
         req_parser.add_argument('password', type=str, required=True)
-        args = self.req_parser.parse_args()
+        args = req_parser.parse_args()
 
         password_reset = db.session.query(PasswordReset
                             ).filter(PasswordReset.code==args['code']

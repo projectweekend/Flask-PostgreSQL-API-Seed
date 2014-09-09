@@ -10,7 +10,7 @@ from app.users.mixins import SignupLoginMixin
 from app.users.models import User, PasswordReset
 
 from app.utils.auth import auth_required, admin_required, generate_token
-from app.utils.errors import EMAIL_IN_USE, UNAUTHORIZED, CODE_NOT_VALID
+from app.utils.errors import EMAIL_IN_USE, UNAUTHORIZED, CODE_NOT_VALID, BAD_CREDENTIALS
 
 from app import db, bcrypt
 
@@ -58,7 +58,7 @@ class AuthenticationAPI(SignupLoginMixin, restful.Resource):
                 'token': generate_token(user)
             }
 
-        return UNAUTHORIZED
+        return BAD_CREDENTIALS
 
 
 class PasswordResetRequestAPI(restful.Resource):

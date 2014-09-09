@@ -29,7 +29,7 @@ class UserAPI(SignupLoginMixin, restful.Resource):
         return g.current_user
 
     def post(self):
-        args = self.reg_parser.parse_args()
+        args = self.req_parser.parse_args()
 
         user = User(email=args['email'], password=args['password'])
         db.session.add(user)
@@ -48,7 +48,7 @@ class UserAPI(SignupLoginMixin, restful.Resource):
 class AuthenticationAPI(SignupLoginMixin, restful.Resource):
 
     def post(self):
-        args = self.reg_parser.parse_args()
+        args = self.req_parser.parse_args()
 
         user = db.session.query(User).filter(User.email==args['email']).first()
         if user and bcrypt.check_password_hash(user.password, args['password']):
@@ -64,9 +64,9 @@ class AuthenticationAPI(SignupLoginMixin, restful.Resource):
 class PasswordResetRequestAPI(restful.Resource):
 
     def post(self):
-        reg_parser = reqparse.RequestParser()
-        reg_parser.add_argument('email', type=str, required=True)
-        args = self.reg_parser.parse_args()
+        req_parser = reqparse.RequestParser()
+        req_parser.add_argument('email', type=str, required=True)
+        args = self.req_parser.parse_args()
 
         user = db.session.query(User).filter(User.email==args['email']).first()
         if user:
@@ -79,10 +79,10 @@ class PasswordResetRequestAPI(restful.Resource):
 class PasswordResetConfirmAPI(restful.Resource):
 
     def post(self):
-        reg_parser = reqparse.RequestParser()
-        reg_parser.add_argument('code', type=str, required=True)
-        reg_parser.add_argument('password', type=str, required=True)
-        args = self.reg_parser.parse_args()
+        req_parser = reqparse.RequestParser()
+        req_parser.add_argument('code', type=str, required=True)
+        req_parser.add_argument('password', type=str, required=True)
+        args = self.req_parser.parse_args()
 
         password_reset = db.session.query(PasswordReset
                             ).filter(PasswordReset.code==args['code']

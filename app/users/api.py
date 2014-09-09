@@ -70,7 +70,7 @@ class PasswordResetRequestAPI(restful.Resource):
 
         user = db.session.query(User).filter(User.email==args['email']).first()
         if user:
-            password_reset = PasswordReset(user=user)
+            password_reset = PasswordReset(user_id=user.id)
             db.session.add(password_reset)
             db.session.commit()
             # TODO: send email

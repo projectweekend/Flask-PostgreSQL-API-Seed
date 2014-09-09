@@ -34,5 +34,5 @@ class PasswordReset(db.Model):
 
     db.UniqueConstraint('user', 'code', name='uni_user_code')
 
-    def __init__(self, user):
-        self.user = user
+    def __init__(self, user_id):
+        self.user = user_id

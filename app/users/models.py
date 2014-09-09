@@ -14,9 +14,12 @@ class User(db.Model):
 
     def __init__(self, email, password, is_admin=False):
         self.email = email
-        self.password = bcrypt.generate_password_hash(password)
         self.active = True
         self.is_admin = is_admin
+        self.set_password(password)
+
+    def set_password(self, password):
+        self.password = bcrypt.generate_password_hash(password)
 
     def deactivate(self):
         self.active = False

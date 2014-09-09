@@ -1,11 +1,13 @@
+from datetime import datetime
+
 from flask import g
 from flask.ext import restful
-from flask.ext.restful import fields, marshal_with
+from flask.ext.restful import reqparse, fields, marshal_with
 from sqlalchemy.exc import IntegrityError
 
 
 from app.users.mixins import SignupLoginMixin
-from app.users.models import User
+from app.users.models import User, PasswordReset
 
 from app.utils.auth import auth_required, admin_required, generate_token
 from app.utils.errors import EMAIL_IN_USE, UNAUTHORIZED
@@ -57,6 +59,44 @@ class AuthenticationAPI(SignupLoginMixin, restful.Resource):
             }
 
         return UNAUTHORIZED
+
+
+class PasswordResetRequestAPI(restful.Resource):
+
+    def post(self):
+        reg_parser = reqparse.RequestParser()
+        reg_parser.add_argument('email', type=str, required=True)
+        args = self.reg_parser.parse_args()
+
+        user = db.session.query(User).filter(User.email==args['email']).first()
+        if user:
+            # TODO: send email
+            pass
+
+        return {}, 201
+
+
+class PasswordResetConfirmAPI(restful.Resource):
+
+    def post(self):
+        reg_parser = reqparse.RequestParser()
+        reg_parser.add_argument('code', type=str, required=True)
+        reg_parser.add_argument('password', type=str, required=True)
+        args = self.reg_parser.parse_args()
+
+        password_reset = db.session.query(PasswordReset
+                            ).filter(PasswordReset.code==args['code']
+                            ).filter(PasswordReset.date>datetime.now()).first()
+
+        if not password_reset:
+            return UNAUTHORIZED
+
+        password_reset.user.set_password(args['password'])
+        db.session.delete(password_reset)
+        db.session.commit()
+
+        return {}, 200
+
 
 
 class AdminOnlyAPI(restful.Resource):

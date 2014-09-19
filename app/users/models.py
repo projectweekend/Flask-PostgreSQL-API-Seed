@@ -36,7 +36,7 @@ class PasswordReset(db.Model):
     code = db.Column(db.String(255), unique=True, default=make_code)
     date = db.Column(db.DateTime(), default=expiration_date)
 
-    user = db.relationship(User)
+    user = db.relationship(AppUser)
 
     db.UniqueConstraint('user_id', 'code', name='uni_user_code')
 

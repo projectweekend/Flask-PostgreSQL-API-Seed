@@ -7,7 +7,7 @@ from sqlalchemy.exc import IntegrityError
 
 
 from app.users.mixins import SignupLoginMixin
-from app.users.models import User, PasswordReset
+from app.users.models import AppUser, PasswordReset
 
 from app.utils.auth import auth_required, admin_required, generate_token
 from app.utils.errors import EMAIL_IN_USE, CODE_NOT_VALID, BAD_CREDENTIALS
@@ -31,7 +31,7 @@ class UserAPI(SignupLoginMixin, restful.Resource):
     def post(self):
         args = self.req_parser.parse_args()
 
-        user = User(email=args['email'], password=args['password'])
+        user = AppUser(email=args['email'], password=args['password'])
         db.session.add(user)
 
         try:
@@ -50,7 +50,7 @@ class AuthenticationAPI(SignupLoginMixin, restful.Resource):
     def post(self):
         args = self.req_parser.parse_args()
 
-        user = db.session.query(User).filter(User.email==args['email']).first()
+        user = db.session.query(AppUser).filter(AppUser.email==args['email']).first()
         if user and bcrypt.check_password_hash(user.password, args['password']):
 
             return {
@@ -68,7 +68,7 @@ class PasswordResetRequestAPI(restful.Resource):
         req_parser.add_argument('email', type=str, required=True)
         args = req_parser.parse_args()
 
-        user = db.session.query(User).filter(User.email==args['email']).first()
+        user = db.session.query(AppUser).filter(AppUser.email==args['email']).first()
         if user:
             password_reset = PasswordReset(user=user)
             db.session.add(password_reset)

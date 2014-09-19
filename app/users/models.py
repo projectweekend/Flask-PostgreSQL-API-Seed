@@ -8,7 +8,7 @@ def expiration_date():
     return datetime.now() + timedelta(days=1)
 
 
-class User(db.Model):
+class AppUser(db.Model):
 
     id = db.Column(db.Integer(), primary_key=True)
     email = db.Column(db.String(255), unique=True)
@@ -32,13 +32,13 @@ class User(db.Model):
 class PasswordReset(db.Model):
 
     id = db.Column(db.Integer(), primary_key=True)
-    user_id = db.Column(db.Integer(), db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer(), db.ForeignKey('app_user.id'))
     code = db.Column(db.String(255), unique=True, default=make_code)
     date = db.Column(db.DateTime(), default=expiration_date)
 
     user = db.relationship(User)
 
-    db.UniqueConstraint('user', 'code', name='uni_user_code')
+    db.UniqueConstraint('user_id', 'code', name='uni_user_code')
 
     def __init__(self, user):
         self.user = user

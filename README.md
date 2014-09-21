@@ -63,7 +63,7 @@ This API uses token-based authentication. A token is obtained by registering a n
 ```
 
 **Body:**
-```
+```json
 {
     "email": "something@email.com",
     "password": "123456"
@@ -71,7 +71,7 @@ This API uses token-based authentication. A token is obtained by registering a n
 ```
 
 **Response:**
-```
+```json
 {
     "id": 2,
     "token": "eyJhbGciOiJIUzI1NiIsImV4cCI6MTQxMDk2ODA5NCwiaWF0IjoxNDA5NzU4NDk0fQ.eyJpc19hZG1pbiI6ZmFsc2UsImlkIjoyLCJlbWFpbCI6InRlc3QyQHRlc3QuY29tIn0.goBHisCajafl4a93jfal0sD5pdjeYd5se_a9sEkHs"
@@ -92,7 +92,7 @@ This API uses token-based authentication. A token is obtained by registering a n
 ```
 
 **Response:**
-```
+```json
 {
     "id": 2,
     "email": "test2@test.com",
@@ -112,7 +112,7 @@ This API uses token-based authentication. A token is obtained by registering a n
 ```
 
 **Body:**
-```
+```json
 {
     "email": "something@email.com",
     "password": "123456"
@@ -120,11 +120,12 @@ This API uses token-based authentication. A token is obtained by registering a n
 ```
 
 **Response:**
-```
+```json
 {
     "id": 2,
     "token": "eyJhbGciOiJIUzI1NiIsImV4cCI6MTQxMDk2ODA5NCwiaWF0IjoxNDA5NzU4NDk0fQ.eyJpc19hZG1pbiI6ZmFsc2UsImlkIjoyLCJlbWFpbCI6InRlc3QyQHRlc3QuY29tIn0.goBHisCajafl4a93jfal0sD5pdjeYd5se_a9sEkHs"
 }
+```
 
 **Status Codes:**
 * `200` if successful

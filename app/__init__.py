@@ -4,6 +4,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.bcrypt import Bcrypt
 from flask.ext.migrate import Migrate, MigrateCommand
 from flask.ext.script import Manager
+from flask_redis import Redis
 
 
 app = Flask(__name__)
@@ -13,6 +14,7 @@ rest_api = restful.Api(app)
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
+redis = Redis(app)
 
 
 import routes
